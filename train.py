@@ -1,4 +1,5 @@
 import os
+import argparse
 from typing import BinaryIO
 from multiprocessing import Pool
 from collections import defaultdict
@@ -157,6 +158,17 @@ def train_bpe(
     return (vocab, merges)
 
 if __name__ == "__main__":
-    path = "sample-data/TinyStoriesV2-GPT4-valid.txt"
-    (vocab, merges) = train_bpe(path, 1000, ['<|endoftext|>'])
-    save_tokenizer(vocab, merges, "vocab.json", "merges.txt")
+    parser = argparse.ArgumentParser(description="Train a BPE tokenizer.")
+    parser.add_argument("--input", type=str, required=True, help="Path to the input text file")
+    parser.add_argument("--vocab-size", type=int, required=True, help="Target vocabulary size")
+    parser.add_argument("--special-tokens", type=str, nargs="+", default=["<|endoftext|>"], help="Special tokens to include")
+    
+    args = parser.parse_args()
+
+    (vocab, merges) = train_bpe(args.input, args.vocab_size, args.special_tokens)
+    
+    # Save files with names based on vocab size for convenience
+    vocab_file = f"vocab_{args.vocab_size}.json"
+    merges_file = f"merges_{args.vocab_size}.txt"
+    save_tokenizer(vocab, merges, vocab_file, merges_file)
+    print(f"Training complete. Saved to {vocab_file} and {merges_file}")
