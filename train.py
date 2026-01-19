@@ -146,7 +146,7 @@ def train_bpe(
 
             new_word = tuple(new_word)
             del word_freqs[word]
-            word_freqs[new_word] = counts
+            word_freqs[new_word] += counts
 
             merged_words.append(new_word)
             for ch1, ch2 in zip(word, word[1:]):
