@@ -1,1 +1,24 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Virtual Environment
+.venv/
+venv/
+env/
+ENV/
+
+# VS Code / IDE
+.vscode/
+.idea/
+
+# Profiling and experimental output
+profile.html
+profile.json
+*.prof
+scalene/
